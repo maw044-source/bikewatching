@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bikewatching</title>
     <link rel="stylesheet" href="global.css">
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css">
+<link rel="stylesheet" href="map.css">
+<script type="module" src="map.js"></script>
   </head>
   <body>
     <h1>🚲 Bikewatching</h1>
     <p>Explore how Bluebikes traffic changes throughout the day in Boston and Cambridge.</p>
+    <label for="time-slider">Filter by time</label>
+<input id="time-slider" type="range" min="-1" max="1439" value="-1">
+<output id="selected-time" for="time-slider">Any time</output>
+<div id="map">
+  <svg id="stations"></svg>
+</div>
+<ul class="legend" aria-label="Station traffic direction">
+  <li style="color: #2878b5">● More departures</li>
+  <li style="color: #7563a8">● Balanced</li>
+  <li style="color: #d97706">● More arrivals</li>
+</ul>
   </body>
 </html>
