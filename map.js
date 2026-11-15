@@ -76,7 +76,21 @@ map.on('load', async () => {
     .data(allDayStations, (station) => station.short_name)
     .join('circle');
 
-  circles.append('title');
+  const stationPopup = new mapboxgl.Popup({
+    className: 'station-popup',
+    closeButton: false,
+    closeOnClick: false,
+    offset: 12,
+  });
+
+  circles
+    .on('pointerenter', (event, station) => {
+      stationPopup
+        .setLngLat([station.lon, station.lat])
+        .setText(station.name + '\n' + station.departures + ' departures · ' + station.arrivals + ' arrivals')
+        .addTo(map);
+    })
+    .on('pointerleave', () => stationPopup.remove());
 
   function updateStationTraffic() {
     const time = Number(timeSlider.value);
@@ -93,14 +107,10 @@ map.on('load', async () => {
       .data(stations, (station) => station.short_name)
       .attr('r', (station) => radiusScale(station.totalTraffic))
       .style('fill', (station) =>
-  flowColor(station.totalTraffic
-    ? station.departures / station.totalTraffic
-    : 0.5),
-)
-      .select('title')
-      .text((station) =>
-        `${station.name}\n${station.departures} departures · ${station.arrivals} arrivals`,
+        flowColor(station.totalTraffic ? station.departures / station.totalTraffic : 0.5),
       );
+
+    stationPopup.remove();
   }
 
   function updatePositions() {

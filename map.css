@@ -23,3 +23,12 @@
   stroke-width: 1;
   pointer-events: auto;
 }
+
+#map .station-popup {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.station-popup .mapboxgl-popup-content {
+  white-space: pre-line;
+}
